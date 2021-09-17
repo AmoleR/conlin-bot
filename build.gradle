@@ -28,6 +28,7 @@ dependencies {
   implementation("net.dv8tion:JDA:4.3.0_277")
   implementation('org.jsoup:jsoup:1.14.2')
   implementation('io.github.furstenheim:copy_down:1.0')
+  implementation('io.github.cdimascio:dotenv-java:2.2.0')
 }
 
 compileJava.options.encoding = "UTF-8"

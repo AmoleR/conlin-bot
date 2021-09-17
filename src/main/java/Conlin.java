@@ -10,11 +10,7 @@ import org.jsoup.select.Elements;
 import io.github.furstenheim.CopyDown;
 
 public class Conlin {
-    public HashMap<String, Homework> homeworks;
-
-    public Conlin() {
-        this.homeworks = new HashMap<String, Homework>();
-    }
+    public static HashMap<String, Homework> homeworks = new HashMap<String, Homework>();
 
     public static String getMonth() {
         Calendar now = Calendar.getInstance();
@@ -93,7 +89,7 @@ public class Conlin {
         return getBaseUrl() + "/HW_" + getCurrentYears() + "/BC_" + month + ".html";
     }
 
-    public void getHomework(String month) throws Exception {
+    public static void getHomework(String month) throws Exception {
         URL url = new URL(getUrl(month));
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -144,7 +140,7 @@ public class Conlin {
                 String assignment = (new CopyDown()).convert(parseHTML(rowComponents.get(4).html()));
 
                 for (String date : dates) {
-                    this.homeworks.put(date.trim(), new Homework(hwNumber, sectionNumber, assignment));
+                    homeworks.put(date.trim(), new Homework(hwNumber, sectionNumber, assignment));
                 }
             }
         }

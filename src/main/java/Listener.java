@@ -10,12 +10,6 @@ import java.util.*;
 public class Listener extends ListenerAdapter {
 
     public static final String PREFIX = "?";
-    private Conlin conlin;
-
-    public Listener() {
-        super();
-        this.conlin = new Conlin();
-    }
 
     private void conlin(MessageReceivedEvent event) {
         event.getChannel().sendMessage(
@@ -24,7 +18,7 @@ public class Listener extends ListenerAdapter {
     }
 
     public void update() throws Exception {
-        this.conlin.getHomework(Conlin.getMonth() + Conlin.getYear());
+        Conlin.getHomework(Conlin.getMonth() + Conlin.getYear());
     }
 
     private void hw(MessageReceivedEvent event, List<String> args) {
@@ -34,7 +28,7 @@ public class Listener extends ListenerAdapter {
             if (args.size() > 0)
                 hw = args.get(0);
 
-            Homework homework = this.conlin.homeworks.get(hw);
+            Homework homework = Conlin.homeworks.get(hw);
 
             if (homework == null) {
                 event.getChannel().sendMessage("Homework not found").queue();
@@ -68,7 +62,28 @@ public class Listener extends ListenerAdapter {
     }
 
     private void lecky(MessageReceivedEvent event) {
-        event.getChannel().sendMessage("http://www.chaoticgolf.com/tutorials_calc_aahs.html");
+        event.getChannel().sendMessage("http://www.chaoticgolf.com/tutorials_calc_aahs.html").queue();
+    }
+
+    private void help(MessageReceivedEvent event) {
+        EmbedBuilder eb = new EmbedBuilder();
+
+        eb.setTitle("Help", Conlin.getUrl(Conlin.getMonth() + Conlin.getYear()));
+
+        eb.setColor(Color.GREEN);
+
+        eb.addField("Help", "Get the help command; you can run `?help` to get this message.", false);
+        eb.addField("Homework", "Get the current homework with `?hw` or a past/future one with `?hw month/day`.",
+                false);
+        eb.addField("Conlin", "Use `?conlin` to get Mr. Conlin's most iconic quote.", false);
+        eb.addField("Lecky", "Use `?lecky` to get a link to Mr. Lecky's website.", false);
+        eb.addField("Answers", "Use `?answers` to get a link to the Google Drive.", false);
+
+        eb.setAuthor("Conlin BC", "http://mvhs-fuhsd.org/john_conlin/");
+
+        eb.setFooter("🍞 Bread 👍");
+
+        event.getChannel().sendMessage(eb.build()).queue();
     }
 
     @Override
@@ -105,6 +120,9 @@ public class Listener extends ListenerAdapter {
                 break;
             case "lecky":
                 lecky(event);
+                break;
+            case "help":
+                help(event);
                 break;
         }
     }
