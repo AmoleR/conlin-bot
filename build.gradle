@@ -4,3 +4,30 @@
  * This is a general purpose Gradle build.
  * Learn more about Gradle by exploring our samples at https://docs.gradle.org/7.2/samples
  */
+
+plugins {
+  id("java")
+  id("application")
+  id("com.github.johnrengelman.shadow") version "6.0.0"
+}
+
+mainClassName = "Main"
+
+version '1.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+  maven {
+      url "https://m2.dv8tion.net/releases"
+  }
+}
+
+dependencies {
+  implementation("net.dv8tion:JDA:4.3.0_277")
+  implementation('org.jsoup:jsoup:1.14.2')
+  implementation('io.github.furstenheim:copy_down:1.0')
+}
+
+compileJava.options.encoding = "UTF-8"
