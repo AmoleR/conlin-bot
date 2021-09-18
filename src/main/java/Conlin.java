@@ -13,7 +13,7 @@ public class Conlin {
     public static HashMap<String, Homework> homeworks = new HashMap<String, Homework>();
 
     public static String getMonth() {
-        Calendar now = Calendar.getInstance();
+        Calendar now = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
 
         switch (now.get(Calendar.MONTH)) {
             case Calendar.AUGUST:
@@ -44,7 +44,7 @@ public class Conlin {
     }
 
     public static String getYear() {
-        Calendar now = Calendar.getInstance();
+        Calendar now = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
 
         int year = now.get(Calendar.YEAR);
 
@@ -52,7 +52,7 @@ public class Conlin {
     }
 
     public static String getCurrentYears() {
-        Calendar now = Calendar.getInstance();
+        Calendar now = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
 
         int year = now.get(Calendar.YEAR);
 
