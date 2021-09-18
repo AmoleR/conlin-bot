@@ -36,6 +36,12 @@ public class Listener extends ListenerAdapter {
         Calendar now = Calendar.getInstance(TimeZone.getTimeZone("PST"));
         int day = now.get(Calendar.DAY_OF_MONTH);
         int month = now.get(Calendar.MONTH) + 1;
+        
+        return getClosestHWDate(month, day);
+    }
+
+    private String getClosestHWDate(int month, int day) {
+        Calendar now = Calendar.getInstance(TimeZone.getTimeZone("PST"));
         int year = now.get(Calendar.YEAR) + 1;
         String hw = month + "/" + day;
 
@@ -76,7 +82,22 @@ public class Listener extends ListenerAdapter {
             if (args.size() > 0)
                 hw = args.get(0);
             
-            hw = getClosestHWDate();
+            if (!hw.equals("")) {
+                try {
+                    hw = hw.replaceAll("\\.", "/");
+                    hw = hw.replaceAll("-", "/");
+
+                    int month = Integer.parseInt(hw.substring(0, hw.indexOf("/")));
+                    int day = Integer.parseInt(hw.substring(hw.indexOf("/") + 1));
+
+                    hw = getClosestHWDate(month, day);
+                } catch (Exception e) {
+                    System.out.println(e);
+                    sendMessage(event, "Father Conlin dislikes your date format");
+                    return;
+                }
+            } else 
+                hw = getClosestHWDate();
 
             Homework homework = Conlin.homeworks.get(hw);
 
@@ -107,8 +128,7 @@ public class Listener extends ListenerAdapter {
     }
 
     private void answers(MessageReceivedEvent event) {
-        sendMessage(event, "https://drive.google.com/drive/u/2/folders/1iw7QwFqWgbEOwm6SIt_fJO-Tp0Qvvroo")
-                ;
+        sendMessage(event, "https://drive.google.com/drive/u/2/folders/1iw7QwFqWgbEOwm6SIt_fJO-Tp0Qvvroo");
     }
 
     private void lecky(MessageReceivedEvent event) {
@@ -178,7 +198,7 @@ public class Listener extends ListenerAdapter {
             case "help":
                 help(event);
                 break;
-            case "math help":
+            case "math-help":
                 mathHelp(event);
                 break;
         }
