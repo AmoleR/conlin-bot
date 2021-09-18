@@ -48,7 +48,7 @@ public class Listener extends ListenerAdapter {
 
             eb.setAuthor("John Conlin", "http://mvhs-fuhsd.org/john_conlin/");
 
-            eb.setFooter("🍞 Bread 👍");
+            eb.setFooter("🍞 Bread 👍 ");
 
             event.getChannel().sendMessage(eb.build()).queue();
         } catch (Exception e) {
