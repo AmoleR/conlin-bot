@@ -21,12 +21,30 @@ public class Listener extends ListenerAdapter {
         Conlin.getHomework(Conlin.getMonth() + Conlin.getYear());
     }
 
+    private String getClosestHWDate() {
+        Calendar now = Calendar.getInstance(TimeZone.getTimeZone("PST"));
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        int month = now.get(Calendar.MONTH) + 1;
+        String hw = month + "/" + day;
+
+        while(!Conlin.homeworks.containsKey(hw)) {
+            day--;
+            if(day == 0) 
+                return null;
+            hw = month + "/" + day;
+        }
+
+        return hw;
+    }
+
     private void hw(MessageReceivedEvent event, List<String> args) {
         try {
-            String hw = "9/15";
+            String hw = "";
 
             if (args.size() > 0)
                 hw = args.get(0);
+            
+            hw = getClosestHWDate();
 
             Homework homework = Conlin.homeworks.get(hw);
 
