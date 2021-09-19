@@ -17,6 +17,9 @@ public class Listener extends ListenerAdapter {
             "> The limit of the function never depends on the value of the function at that point.\n\n- John Conlin"
         );
     }
+    private void german(MessageReceivedEvent event){
+        sendMessage(event, "Guten Morgen");
+    }
 
     private void sendMessage(MessageReceivedEvent event, MessageEmbed payload) {
         event.getChannel().sendMessage(payload)
@@ -201,6 +204,8 @@ public class Listener extends ListenerAdapter {
             case "math-help":
                 mathHelp(event);
                 break;
+            case "german";
+                german(event);
         }
     }
 }
