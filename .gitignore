@@ -2,6 +2,8 @@
 **/build/
 !src/**/build/
 
+bin/main
+
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -12,3 +14,4 @@ gradle-app.setting
 .gradletasknamecache
 
 .env
+bin/main/Listener.class

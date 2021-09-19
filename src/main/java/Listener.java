@@ -28,7 +28,7 @@ public class Listener extends ListenerAdapter {
     }
 
     private void sendMessage(MessageReceivedEvent event, String payload) {
-        event.getChannel().sendMessage(payload).queueAfter(3, TimeUnit.SECONDS);
+        event.getChannel().sendMessage(payload).queueAfter(2, TimeUnit.SECONDS);
                 // .queue();
     }
 
