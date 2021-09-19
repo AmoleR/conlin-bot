@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.Color;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 // :hw => current day's homework
 
@@ -24,8 +25,8 @@ public class Listener extends ListenerAdapter {
     }
 
     private void sendMessage(MessageReceivedEvent event, String payload) {
-        event.getChannel().sendMessage(payload)
-                .queue();
+        event.getChannel().sendMessage(payload).queueAfter(3, TimeUnit.SECONDS);
+                // .queue();
     }
 
     public void update() throws Exception {
@@ -167,6 +168,11 @@ public class Listener extends ListenerAdapter {
 
         String content = event.getMessage().getContentRaw();
 
+        if(content.equalsIgnoreCase("fiesta")) {
+            sendMessage(event, content);
+            return;
+        }
+
         if (!content.startsWith(PREFIX))
             return;
 
@@ -200,6 +206,9 @@ public class Listener extends ListenerAdapter {
                 break;
             case "math-help":
                 mathHelp(event);
+                break;
+            case "dont-say":
+                sendMessage(event, "fuck");
                 break;
         }
     }

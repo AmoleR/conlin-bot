@@ -15,6 +15,8 @@ public class Main {
         Duration duration = Duration.between(now, nextRun);
         long initalDelay = duration.getSeconds();
 
+        System.out.println(System.getenv().get("TOKEN"));
+
         Dotenv dotenv = Dotenv.load();
 
         String token = dotenv.get("TOKEN");
