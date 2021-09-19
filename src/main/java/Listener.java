@@ -20,6 +20,8 @@ public class Listener extends ListenerAdapter {
     private void german(MessageReceivedEvent event){
         sendMessage(event, "Guten Morgen");
     }
+   
+    
 
     private void sendMessage(MessageReceivedEvent event, MessageEmbed payload) {
         event.getChannel().sendMessage(payload)
@@ -162,6 +164,14 @@ public class Listener extends ListenerAdapter {
     private void mathHelp(MessageReceivedEvent event) {
         sendMessage(event, "Help Daddy <@446065841172250638>");
     }
+    private void dissapointed(MessageReceivedEvent event)
+    {
+        sendMessage(event, "I am dissapointed in you <@760895571950174278>");   
+    }
+    private void daddyRyan(MessageReceivedEvent event)
+    {
+        sendMessage(event, "Daddy Ryan :hot_face:");
+    }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
@@ -204,6 +214,13 @@ public class Listener extends ListenerAdapter {
             case "math-help":
                 mathHelp(event);
                 break;
+            case "hot-man":
+                const attachment = new Attachment('https://akns-images.eonline.com/eol_images/Entire_Site/2015922/rs_634x955-151022145512-634.Ryan-Reynolds-Amityville-Horror.3.ms.102215.jpg?fit=around%7C634:955&output-quality=90&crop=634:955;center,top');
+                message.channel.send(message.author, attachment);
+                daddyRyan(event);
+                break;
+            case "you-suck":
+                dissapointed(event);
             case "german";
                 german(event);
         }
