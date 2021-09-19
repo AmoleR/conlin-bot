@@ -1,4 +1,5 @@
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -12,8 +13,18 @@ public class Listener extends ListenerAdapter {
     public static final String PREFIX = "?";
 
     private void conlin(MessageReceivedEvent event) {
-        event.getChannel().sendMessage(
-                "> The limit of the function never depends on the value of the function at that point.\n\n- John Conlin")
+        sendMessage(event, 
+            "> The limit of the function never depends on the value of the function at that point.\n\n- John Conlin"
+        );
+    }
+
+    private void sendMessage(MessageReceivedEvent event, MessageEmbed payload) {
+        event.getChannel().sendMessage(payload)
+                .queue();
+    }
+
+    private void sendMessage(MessageReceivedEvent event, String payload) {
+        event.getChannel().sendMessage(payload)
                 .queue();
     }
 
@@ -21,17 +32,77 @@ public class Listener extends ListenerAdapter {
         Conlin.getHomework(Conlin.getMonth() + Conlin.getYear());
     }
 
+    private String getClosestHWDate() {
+        Calendar now = Calendar.getInstance(TimeZone.getTimeZone("PST"));
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        int month = now.get(Calendar.MONTH) + 1;
+        
+        return getClosestHWDate(month, day);
+    }
+
+    private String getClosestHWDate(int month, int day) {
+        Calendar now = Calendar.getInstance(TimeZone.getTimeZone("PST"));
+        int year = now.get(Calendar.YEAR) + 1;
+        String hw = month + "/" + day;
+
+        while(!Conlin.homeworks.containsKey(hw)) {
+            day--;
+            if(day == 0) {
+                month--;
+
+                if(month == 0)
+                    return null;
+
+                // ugly checks for stupid month days
+                if(month == 2)
+                    day = year % 4 == 0 ? 28 : 27;
+                else if(month < 8) {
+                    if(month % 2 == 0)
+                        day = 30;
+                    else
+                        day = 31;
+                } else {
+                    if(month % 2 == 0)
+                        day = 31;
+                    else
+                        day = 30;
+                }
+                
+            }
+            hw = month + "/" + day;
+        }
+
+        return hw;
+    }
+
     private void hw(MessageReceivedEvent event, List<String> args) {
         try {
-            String hw = "9/15";
+            String hw = "";
 
             if (args.size() > 0)
                 hw = args.get(0);
+            
+            if (!hw.equals("")) {
+                try {
+                    hw = hw.replaceAll("\\.", "/");
+                    hw = hw.replaceAll("-", "/");
+
+                    int month = Integer.parseInt(hw.substring(0, hw.indexOf("/")));
+                    int day = Integer.parseInt(hw.substring(hw.indexOf("/") + 1));
+
+                    hw = getClosestHWDate(month, day);
+                } catch (Exception e) {
+                    System.out.println(e);
+                    sendMessage(event, "Father Conlin dislikes your date format");
+                    return;
+                }
+            } else 
+                hw = getClosestHWDate();
 
             Homework homework = Conlin.homeworks.get(hw);
 
             if (homework == null) {
-                event.getChannel().sendMessage("Homework not found").queue();
+                sendMessage(event, "Homework not found");
                 return;
             }
 
@@ -50,19 +121,18 @@ public class Listener extends ListenerAdapter {
 
             eb.setFooter("🍞 Bread 👍 ");
 
-            event.getChannel().sendMessage(eb.build()).queue();
+            sendMessage(event, eb.build());
         } catch (Exception e) {
-            event.getChannel().sendMessage("Homework not found").queue();
+            sendMessage(event, "Homework not found");
         }
     }
 
     private void answers(MessageReceivedEvent event) {
-        event.getChannel().sendMessage("https://drive.google.com/drive/u/2/folders/1iw7QwFqWgbEOwm6SIt_fJO-Tp0Qvvroo")
-                .queue();
+        sendMessage(event, "https://drive.google.com/drive/u/2/folders/1iw7QwFqWgbEOwm6SIt_fJO-Tp0Qvvroo");
     }
 
     private void lecky(MessageReceivedEvent event) {
-        event.getChannel().sendMessage("http://www.chaoticgolf.com/tutorials_calc_aahs.html").queue();
+        sendMessage(event, "http://www.chaoticgolf.com/tutorials_calc_aahs.html");
     }
 
     private void help(MessageReceivedEvent event) {
@@ -83,7 +153,11 @@ public class Listener extends ListenerAdapter {
 
         eb.setFooter("🍞 Bread 👍");
 
-        event.getChannel().sendMessage(eb.build()).queue();
+        sendMessage(event, eb.build());
+    }
+
+    private void mathHelp(MessageReceivedEvent event) {
+        sendMessage(event, "Help Daddy <@446065841172250638>");
     }
 
     @Override
@@ -110,9 +184,9 @@ public class Listener extends ListenerAdapter {
             case "update":
                 try {
                     update();
-                    event.getChannel().sendMessage("Updated problems!");
+                    sendMessage(event, "Updated problems!");
                 } catch (Exception e) {
-                    event.getChannel().sendMessage("Error: " + e);
+                    sendMessage(event, "Error: " + e);
                 }
                 break;
             case "answers":
@@ -123,6 +197,9 @@ public class Listener extends ListenerAdapter {
                 break;
             case "help":
                 help(event);
+                break;
+            case "math-help":
+                mathHelp(event);
                 break;
         }
     }
