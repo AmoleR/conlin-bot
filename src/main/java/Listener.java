@@ -19,6 +19,16 @@ public class Listener extends ListenerAdapter {
     }
     private void german(MessageReceivedEvent event){
         sendMessage(event, "Guten Morgen");
+        int check = (int)(Math.random() * (2 - 1 + 1) + 1);
+        if(check == 1)
+        {
+            sendMessage(event, "Guten Morgen!");
+        }
+        else if(check == 2)
+        {
+            sendMessage(event,"eins, zwei, drei");
+        }
+        
     }
 
     private void sendMessage(MessageReceivedEvent event, MessageEmbed payload) {
