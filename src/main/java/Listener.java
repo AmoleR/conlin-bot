@@ -221,6 +221,7 @@ public class Listener extends ListenerAdapter {
                 break;
             case "you-suck":
                 dissapointed(event);
+                break;
             case "german";
                 german(event);
         }
