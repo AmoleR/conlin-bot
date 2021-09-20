@@ -32,6 +32,8 @@ public class Listener extends ListenerAdapter {
                 break;
             case 4:
                 sendMessage(event,"Hasta La Pasta!");
+                break;
+           
         }
     
         
