@@ -18,8 +18,26 @@ public class Listener extends ListenerAdapter {
             "> The limit of the function never depends on the value of the function at that point.\n\n- John Conlin"
         );
     }
-    private void german(MessageReceivedEvent event){
-        sendMessage(event, "Guten Morgen");
+    private void foreign(MessageReceivedEvent event){
+        int check = (int)(Math.Random()*(4-1+1)+1);
+        if(check ==1)
+        {
+            sendMessage(event, "Guten Morgen!");
+        }
+        if(check ==2)
+        {
+            sendMessage(event,"eins, zwei, drei!");
+        }
+        if(check ==3)
+        {
+            sendMessage(event,"any ¿preguntas?");
+        }
+        if(check ==4)
+        {
+            sendMessage(event,"Hasta La Pasta!);
+        }
+                      
+            
     }
 
     private void sendMessage(MessageReceivedEvent event, MessageEmbed payload) {
@@ -213,8 +231,8 @@ public class Listener extends ListenerAdapter {
             case "dont-say":
                 sendMessage(event, "fuck");
                 break;
-            case "german":
-                german(event);
+            case "foreign":
+                foreign(event);
         }
     }
 }
