@@ -23,13 +23,11 @@ public class Listener extends ListenerAdapter {
     }
 
     private void sendMessage(MessageReceivedEvent event, MessageEmbed payload) {
-        event.getChannel().sendMessage(payload)
-                .queue();
+        event.getChannel().sendMessage(payload).queueAfter(1, TimeUnit.SECONDS);
     }
 
     private void sendMessage(MessageReceivedEvent event, String payload) {
-        event.getChannel().sendMessage(payload).queueAfter(2, TimeUnit.SECONDS);
-                // .queue();
+        event.getChannel().sendMessage(payload).queueAfter(1, TimeUnit.SECONDS);
     }
 
     public void update() throws Exception {
@@ -215,6 +213,7 @@ public class Listener extends ListenerAdapter {
                 break;
             case "german":
                 german(event);
+                break;
         }
     }
 }

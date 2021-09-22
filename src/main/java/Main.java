@@ -31,7 +31,7 @@ public class Main {
                 listener.update();
             } catch (Exception e) {
             }
-        }, initalDelay, TimeUnit.DAYS.toSeconds(1), TimeUnit.SECONDS);
+        }, initalDelay, TimeUnit.MINUTES.toSeconds(15), TimeUnit.SECONDS);
 
         api.addEventListener(listener);
 
